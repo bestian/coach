@@ -32,7 +32,11 @@
         :clearable="true"
         placeholder="關鍵字搜詢"
         v-model = "myKey"
+        list="skills"
       >{{myKey}}</v-text-field>
+      <datalist id="skills">
+        <option v-for = "s in skills" :key="s" :value="s"/>
+      </datalist>
     </v-app-bar>
     <v-content>
       <router-view :coaches="coaches" :dojos="dojos" :myKey="myKey" @setKey="setKey"/>
@@ -59,18 +63,24 @@
         {to: '/coachmap', icon: 'mdi-map', title: '教練地圖'},
         {to: '/dojomap', icon: 'mdi-map', title: '場館地圖'}
       ],
-      coaches: [
-        { name: '周亮', latlng: [25.105497, 121.597366], img: 'https://i.imgur.com/62FAmJj.jpg', des: '這是比較長的介紹' }
-      ],
-      dojos: [
-        { name: '周亮', latlng: [25.105497, 121.597366], img: 'https://i.imgur.com/62FAmJj.jpg', des: '這是比較長的介紹' }
-      ]
+      coaches: [],
+      dojos: [],
+      skills: []
     }),
     mounted () {
       var vm = this
       // this.$http.get('/coaches.json').then(response => {
       this.$http.get('https://bestian.github.io/coach/coaches.json').then(response => {
           vm.coaches = response.data
+          for (var i = 0; i < vm.coaches.length; i++) {
+            var skills = vm.coaches[i].skills
+            for (var j = 0; j < skills.length; j++) {
+              let s = skills[j]
+               if (vm.skills.indexOf(s) == -1) { 
+                 vm.skills.push(s)
+               }
+             } 
+          }
       })
       // this.$http.get('/dojos.json').then(response => {
       this.$http.get('https://bestian.github.io/coach/dojos.json').then(response => {
