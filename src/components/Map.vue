@@ -16,12 +16,18 @@
       />
       <l-marker v-for = "m in search(markers, myKey)" :key="m.name" :lat-lng="m.latlng" :icon="getIcon(m)" @click="showLongText(m)">
         <l-tooltip :options="{ permanent: true, interactive: true }">
-          <div>
+          <div :class="showParagraph[m.name] ? 'flag' : 'tip'">
             <button >{{ m.name }}</button>
-            <p v-if="showParagraph[m.name]">
-              <img class="med" :src="m.img"/>
-              {{ m.des }}
-            </p>
+            <v-row v-if="showParagraph[m.name]">
+              <v-col>
+                <img class="med" :src="m.img"/>
+              </v-col>
+              <v-col>
+                <p> {{ m.des }} </p>
+                <p> {{ m.skills }} </p>
+                <p> 聯絡方式： {{ m.contact }} </p>
+             </v-col>
+            </v-row>
           </div>
         </l-tooltip>
       </l-marker>
@@ -124,6 +130,10 @@ img.med {
 
 .vue2leaflet-map {
   z-index: 1;
+}
+
+.flag {
+  width: 44vw;
 }
 
 </style>
