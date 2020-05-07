@@ -25,7 +25,7 @@
       <v-toolbar-title> {{$route.name }}</v-toolbar-title>
     </v-app-bar>
     <v-content>
-      <router-view/>
+      <router-view :coaches="coaches" :dojos="dojos"/>
     </v-content>
   </v-app>
 </template>
@@ -42,8 +42,25 @@
         {to: '/about', icon: 'mdi-information', title: '關於'},
         {to: '/coachmap', icon: 'mdi-map', title: '教練地圖'},
         {to: '/dojomap', icon: 'mdi-map', title: '場館地圖'}
+      ],
+      coaches: [
+        { name: '周亮', latlng: [25.105497, 121.597366], img: 'https://i.imgur.com/62FAmJj.jpg', des: '這是比較長的介紹' }
+      ],
+      dojos: [
+        { name: '周亮', latlng: [25.105497, 121.597366], img: 'https://i.imgur.com/62FAmJj.jpg', des: '這是比較長的介紹' }
       ]
     }),
+    mounted () {
+      var vm = this
+      // this.$http.get('/coaches.json').then(response => {
+      this.$http.get('https://bestian.github.io/coach/coaches.json').then(response => {
+          vm.coaches = response.data
+      })
+      // this.$http.get('/dojos.json').then(response => {
+      this.$http.get('https://bestian.github.io/coach/dojos.json').then(response => {
+          vm.dojos = response.data
+      })
+    }
   }
 </script>
 

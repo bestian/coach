@@ -17,13 +17,14 @@
         :url="url"
         :attribution="attribution"
       />
-      <l-marker v-for = "m in markers" :key="m.name" :lat-lng="m.latlng" :icon="getIcon(m)" @click="showLongText(m)">
+      <l-marker v-for = "m in markers" :key="m.name" :lat-lng="m.latlng" :icon="getIcon(m)">
         <l-tooltip :options="{ permanent: true, interactive: true }">
           <div>
-            {{ m.name }}
+            <button @click="showLongText(m)">{{ m.name }}</button>
             <p v-show="showParagraph[m.name]">
               <img class="med" :src="m.img"/>
               {{ m.des }}
+              <a :href="m.site" target="_blank">瞭解更多</a>
             </p>
           </div>
         </l-tooltip>
