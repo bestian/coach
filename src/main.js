@@ -5,9 +5,14 @@ import router from './router'
 import { LMap, LTileLayer, LMarker } from 'vue2-leaflet'
 import 'leaflet/dist/leaflet.css'
 import Vue2LeafletMarkerCluster from 'vue2-leaflet-markercluster'
-
 import L from 'leaflet'
 import vuetify from './plugins/vuetify';
+
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
+Vue.use(VueAxios, axios)
+
 delete L.Icon.Default.prototype._getIconUrl
 
 L.Icon.Default.mergeOptions({

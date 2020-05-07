@@ -51,6 +51,7 @@ export default {
     markers () {
       return this.data.map((o) => 
        {
+        o.latlng = latLng(o.latlng[0], o.latlng[1])
         return o
        })
     }
@@ -58,12 +59,12 @@ export default {
   data() {
     return {
       markerExample: 
-        { latlng: latLng(47.41422, -1.250482), showParagraph: false, name: '周亮', img: 'https://i.imgur.com/62FAmJj.jpg', des: '這是比較長的介紹' }
+        { latlng: latLng(25.105497, 121.597366), showParagraph: false, name: '周亮', img: 'https://i.imgur.com/62FAmJj.jpg', des: '這是比較長的介紹' }
       ,
-      zoom: 13,
-      currentZoom: 11.5,
-      center: latLng(47.41322, -1.219482),
-      currentCenter: latLng(47.41322, -1.219482),
+      zoom: 9,
+      currentZoom: 9,
+      center: latLng(25.105497, 121.597366),
+      currentCenter: latLng(25.105497, 121.597366),
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',

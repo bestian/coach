@@ -5,8 +5,6 @@
 </template>
 
 <script>
-
-import { latLng } from "leaflet";
 // @ is an alias to /src
 import MyMap from '@/components/Map.vue'
 
@@ -18,9 +16,15 @@ export default {
   data() {
     return {
       dojos: [
-        { name: '周亮', latlng: latLng(47.41422, -1.250482), img: 'https://i.imgur.com/62FAmJj.jpg', des: '這是比較長的介紹' }
+        { name: '周亮', latlng: [25.105497, 121.597366], img: 'https://i.imgur.com/62FAmJj.jpg', des: '這是比較長的介紹' }
       ]
     }
+  },
+  mounted () {
+    var vm = this
+    this.$http.get('/dojos.json').then(response => {
+        vm.dojos = response.data
+    })
   }
 };
 </script>
