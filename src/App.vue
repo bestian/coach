@@ -23,9 +23,19 @@
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title> {{$route.name }}</v-toolbar-title>
+      <v-divider></v-divider>
+      <v-text-field
+        :autofocus = "true"
+        hide-details
+        prepend-icon="search"
+        single-line
+        :clearable="true"
+        placeholder="關鍵字搜詢"
+        v-model = "myKey"
+      >{{myKey}}</v-text-field>
     </v-app-bar>
     <v-content>
-      <router-view :coaches="coaches" :dojos="dojos"/>
+      <router-view :coaches="coaches" :dojos="dojos" :myKey="myKey" @setKey="setKey"/>
     </v-content>
   </v-app>
 </template>
@@ -35,7 +45,13 @@
     props: {
       source: String,
     },
+    methods: {
+      setKey (k) {
+        this.myKey = k
+      }
+    },
     data: () => ({
+      myKey: '',
       drawer: null,
       navs: [
         {to: '/', icon: 'mdi-home', title: '首頁'},
@@ -52,8 +68,8 @@
     }),
     mounted () {
       var vm = this
-      // this.$http.get('/coaches.json').then(response => {
-      this.$http.get('https://bestian.github.io/coach/coaches.json').then(response => {
+      this.$http.get('/coaches.json').then(response => {
+      //this.$http.get('https://bestian.github.io/coach/coaches.json').then(response => {
           vm.coaches = response.data
       })
       // this.$http.get('/dojos.json').then(response => {

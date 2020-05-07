@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <my-map :data="dojos"></my-map>
+    <my-map :data="dojos" :myKey="myKey"></my-map>
   </v-container>
 </template>
 
@@ -13,7 +13,7 @@ export default {
   components: {
     MyMap
   },
-  props: ['dojos'],
+  props: ['dojos', 'myKey'],
   data() {
     return {
     }

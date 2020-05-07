@@ -1,9 +1,6 @@
 <template>
 
 <div style="height: 500px; width: 100%">
-    <div style="height: 200px overflow: auto;">
-      <p>Center is at {{ currentCenter }} and the zoom is: {{ currentZoom }}</p>
-    </div>
     <l-map
       v-if="showMap"
       :zoom="zoom"
@@ -17,14 +14,13 @@
         :url="url"
         :attribution="attribution"
       />
-      <l-marker v-for = "m in markers" :key="m.name" :lat-lng="m.latlng" :icon="getIcon(m)">
+      <l-marker v-for = "m in search(markers, myKey)" :key="m.name" :lat-lng="m.latlng" :icon="getIcon(m)" @click="showLongText(m)">
         <l-tooltip :options="{ permanent: true, interactive: true }">
           <div>
-            <button @click="showLongText(m)">{{ m.name }}</button>
+            <button >{{ m.name }}</button>
             <p v-show="showParagraph[m.name]">
               <img class="med" :src="m.img"/>
               {{ m.des }}
-              <a :href="m.site" target="_blank">瞭解更多</a>
             </p>
           </div>
         </l-tooltip>
@@ -35,7 +31,7 @@
 </template>
 
 <script>
-import * as L from 'leaflet'
+import * as L from 'leaflet';
 import { latLng } from "leaflet";
 import { LMap, LTileLayer, LMarker, LTooltip } from "vue2-leaflet";
 
@@ -47,7 +43,7 @@ export default {
     LMarker,
     LTooltip
   },
-  props: ['data'],
+  props: ['data', 'myKey'],
   computed: {
     markers () {
       return this.data.map((o) => 
@@ -77,6 +73,15 @@ export default {
     };
   },
   methods: {
+    search (list, k) {
+      if (!k) { return list }
+      var re = new RegExp(k)
+      var l = list.filter((o) => { 
+        let s = JSON.stringify(o)
+        return re.test(s)
+      })
+      return l
+    },
     getIcon(m) {
       return L.icon({
         iconUrl: m.img,
@@ -97,6 +102,9 @@ export default {
     showLongText(m) {
       if (this.showParagraph[m.name] === undefined) {
         this.showParagraph[m.name] = false
+      }
+      if (this.showParagraph[m.name]) {
+        window.open(m.site)
       }
       this.showParagraph[m.name] = !this.showParagraph[m.name];
       this.$forceUpdate()

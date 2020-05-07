@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <HelloWorld :coaches="coaches" @setKey="setKey" :myKey="myKey"/>
   </div>
 </template>
 
@@ -10,8 +10,14 @@ import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
   name: 'Home',
+  props: ['coaches', 'myKey'],
   components: {
     HelloWorld
+  },
+  methods: {
+    setKey (k) {
+      this.$emit('setKey', k)
+    }
   }
 }
 </script>
