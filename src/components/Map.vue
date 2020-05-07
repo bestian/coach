@@ -18,7 +18,7 @@
         <l-tooltip :options="{ permanent: true, interactive: true }">
           <div>
             <button >{{ m.name }}</button>
-            <p v-show="showParagraph[m.name]">
+            <p v-if="showParagraph[m.name]">
               <img class="med" :src="m.img"/>
               {{ m.des }}
             </p>
@@ -95,10 +95,12 @@ export default {
       })
     },
     zoomUpdate(zoom) {
-      this.currentZoom = zoom;
+      this.currentZoom = zoom
+      this.showParagraph = {}
     },
     centerUpdate(center) {
-      this.currentCenter = center;
+      this.currentCenter = center
+      this.showParagraph = {}
     },
     showLongText(m) {
       if (this.showParagraph[m.name] === undefined) {
