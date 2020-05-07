@@ -44,9 +44,18 @@ export default {
     LTooltip
   },
   props: ['data', 'myKey'],
+  computed: {
+    markers: function () {
+      return this.data.map((o) => 
+       {
+        let obj = JSON.parse(JSON.stringify(o))
+        obj.latlng = latLng(o.latlng[0], o.latlng[1])
+        return obj
+       })
+    }
+  },
   data() {
     return {
-      markers: [],
       markerExample: 
         { latlng: latLng(25.105497, 121.597366), showParagraph: false, name: '周亮', img: 'https://i.imgur.com/62FAmJj.jpg', des: '這是比較長的介紹' }
       ,
@@ -100,18 +109,7 @@ export default {
       }
       this.showParagraph[m.name] = !this.showParagraph[m.name];
       this.$forceUpdate()
-    },
-    reset () {
-      this.markers = this.data.map((o) => 
-       {
-        let obj = JSON.parse(JSON.stringify(o))
-        obj.latlng = latLng(o.latlng[0], o.latlng[1])
-        return obj
-       })
     }
-  },
-  mounted () {
-    this.reset()
   }
 };
 </script>
