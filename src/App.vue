@@ -1,17 +1,60 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app id="inspire">
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+    >
+      <v-list dense>
+        <v-list-item link v-for = "n in navs" :key="n.to" :to = "n.to">
+          <v-list-item-action>
+            <v-icon>{{ n.icon }}</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>{{ n.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+
+    <v-app-bar
+      app
+      color="indigo"
+      dark
+    >
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <v-toolbar-title> {{$route.name }}</v-toolbar-title>
+    </v-app-bar>
+    <v-content>
+      <router-view/>
+    </v-content>
+  </v-app>
 </template>
 
-<style>
+<script>
+  export default {
+    props: {
+      source: String,
+    },
+    data: () => ({
+      drawer: null,
+      navs: [
+        {to: '/', icon: 'mdi-home', title: '首頁'},
+        {to: '/about', icon: 'mdi-information', title: '關於'},
+        {to: '/coachmap', icon: 'mdi-map', title: '教練地圖'},
+        {to: '/dojomap', icon: 'mdi-map', title: '場館地圖'}
+      ]
+    }),
+  }
+</script>
+
+<style lang="scss">
 
 @import "~leaflet.markercluster/dist/MarkerCluster.css";
 @import "~leaflet.markercluster/dist/MarkerCluster.Default.css";
+@import "https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900";
+@import "https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css";
+@import "https://fonts.googleapis.com/css?family=Material+Icons";
+@import '~vuetify/dist/vuetify.css';
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -21,16 +64,12 @@
   color: #2c3e50;
 }
 
-#nav {
-  padding: 30px;
+.v-navigation-drawer {
+  z-index: 999999;
+}
+a {
+  text-decoration: none;
+  cursor: pointer;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>

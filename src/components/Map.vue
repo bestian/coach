@@ -2,14 +2,7 @@
 
 <div style="height: 500px; width: 100%">
     <div style="height: 200px overflow: auto;">
-      <p>First marker is placed at {{ withPopup.lat }}, {{ withPopup.lng }}</p>
       <p>Center is at {{ currentCenter }} and the zoom is: {{ currentZoom }}</p>
-      <button @click="showLongText">
-        Toggle long popup
-      </button>
-      <button @click="showMap = !showMap">
-        Toggle map
-      </button>
     </div>
     <l-map
       v-if="showMap"
@@ -24,26 +17,13 @@
         :url="url"
         :attribution="attribution"
       />
-      <l-marker :lat-lng="withPopup">
-        <l-popup>
-          <div @click="innerClick">
-            I am a popup
-            <p v-show="showParagraph">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-              sed pretium nisl, ut sagittis sapien. Sed vel sollicitudin nisi.
-              Donec finibus semper metus id malesuada.
-            </p>
-          </div>
-        </l-popup>
-      </l-marker>
-      <l-marker :lat-lng="withTooltip">
+      <l-marker v-for = "m in markers" :key="m.name" :lat-lng="m.latlng" :icon="getIcon(m)" @click="showLongText(m)">
         <l-tooltip :options="{ permanent: true, interactive: true }">
-          <div @click="innerClick">
-            I am a tooltip
-            <p v-show="showParagraph">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-              sed pretium nisl, ut sagittis sapien. Sed vel sollicitudin nisi.
-              Donec finibus semper metus id malesuada.
+          <div>
+            {{ m.name }}
+            <p v-show="showParagraph[m.name]">
+              <img class="med" :src="m.img"/>
+              {{ m.des }}
             </p>
           </div>
         </l-tooltip>
@@ -54,8 +34,9 @@
 </template>
 
 <script>
+import * as L from 'leaflet'
 import { latLng } from "leaflet";
-import { LMap, LTileLayer, LMarker, LPopup, LTooltip } from "vue2-leaflet";
+import { LMap, LTileLayer, LMarker, LTooltip } from "vue2-leaflet";
 
 export default {
   name: "Example",
@@ -63,44 +44,73 @@ export default {
     LMap,
     LTileLayer,
     LMarker,
-    LPopup,
     LTooltip
+  },
+  props: ['data'],
+  computed: {
+    markers () {
+      return this.data.map((o) => 
+       {
+        return o
+       })
+    }
   },
   data() {
     return {
+      markerExample: 
+        { latlng: latLng(47.41422, -1.250482), showParagraph: false, name: '周亮', img: 'https://i.imgur.com/62FAmJj.jpg', des: '這是比較長的介紹' }
+      ,
       zoom: 13,
+      currentZoom: 11.5,
       center: latLng(47.41322, -1.219482),
+      currentCenter: latLng(47.41322, -1.219482),
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      withPopup: latLng(47.41322, -1.219482),
-      withTooltip: latLng(47.41422, -1.250482),
-      currentZoom: 11.5,
-      currentCenter: latLng(47.41322, -1.219482),
-      showParagraph: false,
       mapOptions: {
         zoomSnap: 0.5
       },
-      showMap: true
+      showMap: true,
+      showParagraph: {}
     };
   },
   methods: {
+    getIcon(m) {
+      return L.icon({
+        iconUrl: m.img,
+        shadowUrl: '',
+        iconSize: [50, 50], // size of the icon
+        shadowSize: [0, 0], // size of the shadow
+        iconAnchor: [25, 25], // point of the icon which will correspond to marker's location
+        shadowAnchor: [0, 0], // the same for the shadow
+        popupAnchor: [0, 0] // point from which the po
+      })
+    },
     zoomUpdate(zoom) {
       this.currentZoom = zoom;
     },
     centerUpdate(center) {
       this.currentCenter = center;
     },
-    showLongText() {
-      this.showParagraph = !this.showParagraph;
-    },
-    innerClick() {
-      alert("Click!");
+    showLongText(m) {
+      if (this.showParagraph[m.name] === undefined) {
+        this.showParagraph[m.name] = false
+      }
+      this.showParagraph[m.name] = !this.showParagraph[m.name];
+      this.$forceUpdate()
     }
   }
 };
 </script>
 
 <style type="text/css" scoped="">
-  
+
+img.med {
+  width: 150px;
+}
+
+.vue2leaflet-map {
+  z-index: 1;
+}
+
 </style>

@@ -7,6 +7,7 @@ import 'leaflet/dist/leaflet.css'
 import Vue2LeafletMarkerCluster from 'vue2-leaflet-markercluster'
 
 import L from 'leaflet'
+import vuetify from './plugins/vuetify';
 delete L.Icon.Default.prototype._getIconUrl
 
 L.Icon.Default.mergeOptions({
@@ -24,5 +25,6 @@ Vue.config.productionTip = false
 
 new Vue({
   router,
+  vuetify,
   render: h => h(App)
 }).$mount('#app')
