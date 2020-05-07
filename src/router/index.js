@@ -1,29 +1,31 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import Coachmap from '../views/CoachMap.vue'
+import Dojomap from '../views/DojoMap.vue'
 
 Vue.use(VueRouter)
 
   const routes = [
   {
     path: '/',
-    name: 'Home',
+    name: '找教練',
     component: Home
   },
   {
     path: '/about',
-    name: 'About',
+    name: '關於',
     component: () => import('../views/About.vue')
   },
   {
     path: '/coachmap',
-    name: 'Coachmap',
-    component: () => import('../views/CoachMap.vue')
+    name: '教練地圖',
+    component: Coachmap
   },
   {
     path: '/dojomap',
-    name: 'Dojomap',
-    component: () => import('../views/DojoMap.vue')
+    name: '道館地圖',
+    component: Dojomap
   }
 ]
 
