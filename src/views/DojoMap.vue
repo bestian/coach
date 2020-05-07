@@ -22,7 +22,7 @@ export default {
   },
   mounted () {
     var vm = this
-    this.$http.get('/dojos.json').then(response => {
+    this.$http.get('https://bestian.github.io/coach/dojos.json').then(response => {
         vm.dojos = response.data
     })
   }
