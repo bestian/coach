@@ -19,12 +19,12 @@ Vue.use(VueRouter)
   },
   {
     path: '/coachmap',
-    name: '教練地圖',
+    name: '教練',
     component: Coachmap
   },
   {
     path: '/dojomap',
-    name: '道館地圖',
+    name: '道館',
     component: Dojomap
   }
 ]
