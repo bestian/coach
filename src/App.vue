@@ -39,7 +39,7 @@
       </datalist>
     </v-app-bar>
     <v-content>
-      <router-view :coaches="coaches" :dojos="dojos" :myKey="myKey" @setKey="setKey"/>
+      <router-view :coaches="coaches" :dojos="dojos" :myKey="myKey" :skills="skills" @setKey="setKey"/>
     </v-content>
   </v-app>
 </template>

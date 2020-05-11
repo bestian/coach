@@ -13,6 +13,15 @@
       </v-col>
     </v-row>
     <v-row>
+      <v-col sm="4"></v-col>
+      <v-col sm="4">
+        <v-btn text @click = "setKey(s)"  v-for = "s in skills" :key="s">
+          <v-icon>mdi-tag</v-icon>
+            {{ s }}</v-btn>
+      </v-col>
+      <v-col sm="4"></v-col>
+    </v-row>
+    <v-row>
       <v-col class="md-4" v-for = "c in search(coaches, myKey).slice(0, 4)" :key="c.name">
         <v-card
           class="mx-auto"
@@ -34,7 +43,9 @@
           </v-list-item>
 
           <v-card-actions>
-            <v-btn text v-for = "s in c.skills" :key="s" @click = "setKey(s)">{{ s }}</v-btn>
+            <v-btn text v-for = "s in c.skills" :key="s" @click = "setKey(s)">
+              <v-icon>mdi-tag</v-icon>
+              {{ s }}</v-btn>
             <v-btn text link :href = "c.site" target="_blank">前往個人頁</v-btn>
           </v-card-actions>
         </v-card>
@@ -46,7 +57,7 @@
 <script>
   export default {
     name: 'HelloWorld',
-    props: ['coaches', 'myKey'],
+    props: ['coaches', 'myKey', 'skills'],
     data: () => ({
     }),
     methods: {
