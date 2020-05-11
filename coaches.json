@@ -1,0 +1,12 @@
+[
+    { "name": "周亮", "addr": "新北市板橋區", "latlng": [25.105497, 121.597366], 
+      "img": "https://i.imgur.com/62FAmJj.jpg", "des": "周亮是很厲害的教練。",
+      "skills": ["拳擊", "重訓"],
+      "contact": "waterpillow@gmail.com",
+      "site": "https://www.instagram.com/mark.chou1/" },
+    { "name": "測試1", "addr": "台北市中正區", "latlng": [25.1055, 121.72], 
+      "img": "https://i.imgur.com/62FAmJj.jpg", "des": "這是很厲害的教練。",
+      "skills": ["皮拉提斯", "重訓"],
+      "contact": "test@gmailcom",
+      "site": "https://www.instagram.com/mark.chou1/" }
+]
